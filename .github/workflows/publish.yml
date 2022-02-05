@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: ammaraskar/sphinx-action@master
         with:
-          docs-folder: "."
+          docs-folder: "/"
           pre-build-command: "pip install sphinx_rtd_theme && pip install sphinx-notfound-page"
           build-command: "sphinx-build -b html . _build"
     
