@@ -2,18 +2,20 @@ name: 'Public'
 
 on:
   push:
-    master
+    branches:
+      - master
 
 jobs:
   deploy:
+    runs-on: ubuntu-20.04
+    
     name: 'Deploy to Netlify'
     steps:
-    
       - uses: ammaraskar/sphinx-action@master
-      with:
-        docs-folder: "./"
-        pre-build-command: "pip install sphinx_rtd_theme && pip install sphinx-notfound-page"
-        build-command: "sphinx-build -b html . _build"
+        with:
+          docs-folder: "./"
+          pre-build-command: "pip install sphinx_rtd_theme && pip install sphinx-notfound-page"
+          build-command: "sphinx-build -b html . _build"
     
       - uses: jsmrcaga/action-netlify-deploy@v1.1.0
         with:
