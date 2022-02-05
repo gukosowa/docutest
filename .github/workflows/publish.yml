@@ -1,4 +1,4 @@
-name: 'Public'
+name: 'Publish'
 
 on:
   push:
@@ -19,8 +19,17 @@ jobs:
           #pre-build-command: "pip install sphinx_rtd_theme && pip install sphinx-notfound-page"
           build-command: "sphinx-build -b html . _build"
     
-      - uses: jsmrcaga/action-netlify-deploy@v1.1.0
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1.2
         with:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY }}
-          build_directory: _build
-          NETLIFY_DEPLOY_TO_PROD: true
+          publish-dir: './_build'
+          production-branch: master
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions"
+          enable-pull-request-comment: false
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 1
